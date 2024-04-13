@@ -26,26 +26,67 @@ const images = [
   },
 ];
 
+//Inserisco in pagina tutte le immagini del carosello in modo dinamico (tramite js)
 
-let containerCarousel = document.querySelector(".my-carousel-images");
-console.log(containerCarousel);
+const containerCarousel = document.querySelector(".my-carousel-images");
+// console.log(containerCarousel);
 
 
-images.forEach ((curImage) => {
-  console.log(curImage);
-  
-  containerCarousel.innerHTML +=  `
-  <div class="my-carousel-item">
-    <img src="${curImage.image}">
-    <h2>${curImage.title}</h2>
-    <p>${curImage.text} </p>
+images.forEach((curImage) => {
+  // console.log(curImage);
+
+  containerCarousel.innerHTML += `
+  <div class="my-carousel-item"carousel-item="1"> 
+  <img class="img-fluid" src="${curImage.image}" alt="Ratchet & Clank: Rift Apart"/>
+    <div class="item-description px-3">
+      <h2>${curImage.title} </h2>
+      <p>${curImage.text}</p>
+    </div>
   </div>
   `;
 });
 
-const slide = document.querySelectorAll(".my-carousel-item");
-console.log (slide)
 
-let activeIndex = 0
+//Aggiugno la prima slide che deve essere visualizzata
+
+const slide = document.querySelectorAll(".my-carousel-item");
+// console.log(slide);
+
+let activeIndex = 0;
 
 slide[activeIndex].classList.add("active");
+
+//Prelevo gli elementi next e previus per far scorrere il carosello
+
+const next = document.querySelector(".my-next");
+console.log(next);
+
+const previous = document.querySelector(".my-previous");
+console.log(previous);
+
+//Aggiungo gli eventi al click di next e previous
+
+next.addEventListener("click", nextImage);
+previous.addEventListener ("click", previousImage);
+
+function nextImage() {
+  slide[activeIndex].classList.remove("active");
+    if (activeIndex < images.length - 1) {
+      activeIndex++
+    } else {
+      activeIndex = 0;
+    }
+    slide[activeIndex].classList.add("active");
+}
+
+function previousImage (){
+  slide [activeIndex].classList.remove ("active");
+  if (activeIndex > 0 ) {
+    activeIndex --
+  } else {
+    activeIndex = images.length -1;
+  }
+  slide[activeIndex].classList.add("active");
+}
+
+
