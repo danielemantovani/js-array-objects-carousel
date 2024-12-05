@@ -26,67 +26,92 @@ const images = [
   },
 ];
 
-//Inserisco in pagina tutte le immagini del carosello in modo dinamico (tramite js)
 
-const containerCarousel = document.querySelector(".my-carousel-images");
-// console.log(containerCarousel);
+// Seleziono i contenitori principali del carosello e delle miniature
+const containerCarousel = document.querySelector(".my-carousel-images"); // Contenitore per le slide principali
+const smallSlide = document.querySelector(".thumbnails-container"); // Contenitore per le miniature
 
 
+// Genero dinamicamente le slide principali e le miniature
 images.forEach((curImage) => {
-  // console.log(curImage);
-
+  // Aggiungo le slide principali al carosello
   containerCarousel.innerHTML += `
-  <div class="my-carousel-item"carousel-item="1"> 
-  <img class="img-fluid" src="${curImage.image}" alt="Ratchet & Clank: Rift Apart"/>
-    <div class="item-description px-3">
-      <h2>${curImage.title} </h2>
-      <p>${curImage.text}</p>
+    <div class="my-carousel-item">
+      <img src="${curImage.image}" alt="${curImage.title}">
+      <div class="item-description">
+        <h2>${curImage.title}</h2>
+        <p>${curImage.text}</p>
+      </div>
     </div>
-  </div>
+  `;
+
+  // Aggiungo le miniature al contenitore delle miniature
+  smallSlide.innerHTML += `
+    <img class="img-fluid my-thumbnail" src="${curImage.image}" alt="${curImage.title}">
   `;
 });
 
+// Seleziono tutte le slide principali e le miniature
+const slide = document.querySelectorAll(".my-carousel-item"); // Slide principali
+const thumbnails = document.querySelectorAll(".my-thumbnail"); // Miniature
 
-//Aggiugno la prima slide che deve essere visualizzata
+// Imposto la prima slide e la prima miniatura come attive
+let activeIndex = 0; // Indice della slide attiva
+slide[activeIndex].classList.add("active"); // Aggiungo classe "active" alla prima slide
+thumbnails[activeIndex].classList.add("active"); // Aggiungo classe "active" alla prima miniatura
 
-const slide = document.querySelectorAll(".my-carousel-item");
-// console.log(slide);
-
-let activeIndex = 0;
-
-slide[activeIndex].classList.add("active");
-
-//Prelevo gli elementi next e previus per far scorrere il carosello
-
-const next = document.querySelector(".my-next");
-console.log(next);
-
-const previous = document.querySelector(".my-previous");
-console.log(previous);
-
-//Aggiungo gli eventi al click di next e previous
-
-next.addEventListener("click", nextImage);
-previous.addEventListener ("click", previousImage);
-
+// Funzione per passare alla slide successiva
 function nextImage() {
+  // Rimuovo la classe "active" dalla slide attuale e dalla miniatura attuale
   slide[activeIndex].classList.remove("active");
-    if (activeIndex < images.length - 1) {
-      activeIndex++
-    } else {
-      activeIndex = 0;
-    }
-    slide[activeIndex].classList.add("active");
-}
+  thumbnails[activeIndex].classList.remove("active");
 
-function previousImage (){
-  slide [activeIndex].classList.remove ("active");
-  if (activeIndex > 0 ) {
-    activeIndex --
-  } else {
-    activeIndex = images.length -1;
-  }
+  // Incremento l'indice attivo in modo circolare
+  activeIndex = (activeIndex + 1) % slide.length;
+
+  // Aggiungo la classe "active" alla nuova slide e alla nuova miniatura
   slide[activeIndex].classList.add("active");
+  thumbnails[activeIndex].classList.add("active");
 }
 
+// Funzione per passare alla slide precedente
+function previousImage() {
+  // Rimuovo la classe "active" dalla slide attuale e dalla miniatura attuale
+  slide[activeIndex].classList.remove("active");
+  thumbnails[activeIndex].classList.remove("active");
 
+  // Decremento l'indice attivo in modo circolare
+  activeIndex = (activeIndex - 1 + slide.length) % slide.length;
+
+  // Aggiungo la classe "active" alla nuova slide e alla nuova miniatura
+  slide[activeIndex].classList.add("active");
+  thumbnails[activeIndex].classList.add("active");
+}
+
+// Aggiungo gli event listener ai pulsanti "next" e "previous"
+const next = document.querySelector(".my-next"); // Bottone per andare alla slide successiva
+const previous = document.querySelector(".my-previous"); // Bottone per andare alla slide precedente
+
+next.addEventListener("click", () => {
+  nextImage(); // Passo alla slide successiva
+});
+
+previous.addEventListener("click", () => {
+  previousImage(); // Torno alla slide precedente
+});
+
+// Aggiungo gli event listener per le miniature
+thumbnails.forEach((thumbnail, index) => {
+  thumbnail.addEventListener("click", () => {
+    // Rimuovo la classe "active" dalla slide attuale e dalla miniatura attuale
+    slide[activeIndex].classList.remove("active");
+    thumbnails[activeIndex].classList.remove("active");
+
+    // Imposto l'indice attivo in base alla miniatura cliccata
+    activeIndex = index;
+
+    // Aggiungo la classe "active" alla slide e alla miniatura cliccata
+    slide[activeIndex].classList.add("active");
+    thumbnails[activeIndex].classList.add("active");
+  });
+});

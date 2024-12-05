@@ -20,6 +20,7 @@ div.my-thumbnails{
     /* background-color: violet; */
     height: 160px;
     border: 1px solid;
+    
 }
 
 div.my-previous,
@@ -99,6 +100,12 @@ div#my-carousel .my-thumbnails .my-thumbnail{
     width: calc(100% / 5);
     filter: brightness(.4);
 }
+
+div#my-carousel .my-thumbnails .my-thumbnail.active {
+    filter: brightness(1); /* Miniatura attiva */
+    border-color: green; /* Bordo della miniatura attiva */
+}
+
 
 div#my-carousel .my-thumbnails .my-thumbnail img{
     object-fit: cover;
