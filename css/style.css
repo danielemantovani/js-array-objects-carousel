@@ -3,27 +3,11 @@ body {
     font-family: "Montserrat", sans-serif; 
 }
 
-/* Contenitore principale del carosello */
-.my-carousel-container {
-    min-height: 700px;
-    min-width: 800px;
-    max-width: 1350px;
-    margin: 0 auto; 
-    /* background-color: aquamarine; */
-}
-
 /* Sezione delle immagini principali del carosello */
 .my-carousel-images {
     height: 540px;
     border: 1px solid;
     /* background-color: cadetblue; */
-}
-
-/* Contenitore delle miniature */
-.my-thumbnails {
-    height: 160px;
-    border: 1px solid; 
-    /* background-color: violet; */
 }
 
 /* Stile dei pulsanti di navigazione (next e previous) */
@@ -67,6 +51,7 @@ body {
     height: 100%;
     width: 100%;
     object-fit: cover;
+    object-position: right;
 }
 
 /* Descrizione delle slide */
@@ -79,29 +64,19 @@ body {
     text-shadow: 2px 2px 2px black;
 }
 
-/* Contenitore delle miniature */
-#my-carousel .my-thumbnails {
-    flex-basis: 20%;
-    height: 100%;
-    display: flex;
-    overflow-x: auto;
-    position: relative;
-}
-
 /* Stile delle miniature */
-#my-carousel .my-thumbnails .my-thumbnail {
+.my-thumbnails .my-thumbnail {
     height: 160px;
     width: calc(100% / 5); /* Dimensiona ogni miniatura in base al numero */
     filter: brightness(0.4); /* Riduce la luminosità delle miniature non attive */
 }
 
-#my-carousel .my-thumbnails .my-thumbnail.active {
+.my-thumbnails .my-thumbnail.active {
     filter: brightness(1); /* Luminosità aumentata per la miniatura attiva */
     border: 3px solid rgb(197, 197, 197); /* Bordo evidenziato per la miniatura attiva */
 }
 
-#my-carousel .my-thumbnails .my-thumbnail img {
-    object-fit: cover;
-    height: 100%;
-    width: 100%;
+
+.my-thumbnail img{
+    object-fit: contain;
 }
