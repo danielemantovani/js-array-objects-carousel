@@ -115,3 +115,37 @@ thumbnails.forEach((thumbnail, index) => {
     thumbnails[activeIndex].classList.add("active");
   });
 });
+
+
+// Definisco una variabile per gestire l'intervallo automatico
+let autoPlayInterval; // Intervallo per il carosello automatico
+let isAutoPlayRunning = true; // Stato iniziale del carosello automatico
+
+// Funzione per avviare lo scorrimento automatico
+function startAutoPlay() {
+  autoPlayInterval = setInterval(() => {
+    nextImage(); // Passa automaticamente alla slide successiva
+  }, 5000); // Cambia immagine ogni 5 secondi
+}
+
+// Funzione per fermare lo scorrimento automatico
+function stopAutoPlay() {
+  clearInterval(autoPlayInterval); // Ferma lo scorrimento
+}
+
+// Gestione del pulsante per fermare/riprendere lo scorrimento
+const stopButton = document.querySelector("#my-stop-button");
+
+stopButton.addEventListener("click", () => {
+  if (isAutoPlayRunning) {
+    stopAutoPlay(); // Ferma il carosello
+    stopButton.textContent = "Fai ripartire lo scorrimento"; // Cambia il testo del pulsante
+  } else {
+    startAutoPlay(); // Avvia il carosello
+    stopButton.textContent = "Interrompi lo scorrimento"; // Cambia il testo del pulsante
+  }
+  isAutoPlayRunning = !isAutoPlayRunning; // Aggiorna lo stato
+});
+
+// Avvio automatico del carosello al caricamento della pagina
+startAutoPlay();
